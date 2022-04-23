@@ -8,7 +8,7 @@ const Header = () => {
         <>
             <Navbar className='navbar-area' bg="primary" variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#home">Car-Center</Navbar.Brand>
+                    <Navbar.Brand href="/" className='brand-name'>Car-Doctor</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="nav-menu ms-auto">
@@ -17,6 +17,7 @@ const Header = () => {
                         <Link to="/services">Services</Link>
                         <Link to="/contact"> Contact</Link>
                         <Link to="/blogs">Blogs</Link>
+                        <Link to="/login">LogIn</Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>
