@@ -1,24 +1,49 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
-import { Container, Nav, Navbar} from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import './Header.css'
+import auth from '../../../firebase.init';
+import logo from '../../../images/logo.png'
 
 const Header = () => {
+    const [user] = useAuthState(auth);
+
+    const handleSignOut = () =>{
+        signOut(auth);
+    }
+
     return (
         <>
-            <Navbar className='navbar-area' bg="primary" variant="dark" expand="lg">
+            <Navbar collapseOnSelect expand="lg" sticky='top' bg="primary" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/" className='brand-name'>Car-Doctor</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="nav-menu ms-auto">
-                        <Link to="/">Home</Link>
-                        <Link to="/about">About</Link>
-                        <Link to="/services">Services</Link>
-                        <Link to="/contact"> Contact</Link>
-                        <Link to="/blogs">Blogs</Link>
-                        <Link to="/login">LogIn</Link>
-                    </Nav>
+                    <Navbar.Brand as={Link} to="/">
+                        <img height={30} src={logo} alt="" />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="home">Home</Nav.Link>
+                            <Nav.Link href="home#services">Services</Nav.Link>
+                            <Nav.Link href="home#experts">Experts</Nav.Link>
+                            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link as={Link} to="about">About</Nav.Link>
+                            {
+                                user ?
+                                    <button className='btn btn-link text-white text-decoration-none' onClick={handleSignOut}>sign out</button>
+                                :
+                                <Nav.Link as={Link} to="login">
+                                Login
+                            </Nav.Link>}
+                        </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
